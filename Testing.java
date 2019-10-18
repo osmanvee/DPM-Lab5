@@ -26,8 +26,8 @@ public class Testing {
   {
     leftMotor.stop();
     rightMotor.stop();
-    launchMotor1.setAcceleration(20000);
-    launchMotor2.setAcceleration(20000);
+    launchMotor1.setAcceleration(999999);
+    launchMotor2.setAcceleration(999999);
   /* 
     leftMotor.setAcceleration(ACCELERATION);
     rightMotor.setAcceleration(ACCELERATION);
@@ -38,9 +38,9 @@ public class Testing {
     */
 
     Sound.beepSequenceUp();
-    Navigation.turn(180);
-    launchMotor1.setSpeed(launchMotor1.getMaxSpeed());
-    launchMotor2.setSpeed(launchMotor2.getMaxSpeed());
+   // Navigation.turn(180);
+    launchMotor1.setSpeed(2000);
+    launchMotor2.setSpeed(2000);
     
   /*  for(int i = 0; i < 5; i ++)
     {Resources.launchMotor1.rotate(-(70 + 5 * i), true);
@@ -51,8 +51,10 @@ public class Testing {
     /*
      * reset position
      */
-    Resources.launchMotor1.rotate(70, true);
-    Resources.launchMotor2.rotate(70, false);
+    Resources.launchMotor1.rotate(-90, true);
+    Resources.launchMotor2.rotate(-90, false);
+    leftMotor.stop();
+    rightMotor.stop();
    
   //  } */
     System.exit(0);
