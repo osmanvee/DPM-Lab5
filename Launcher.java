@@ -15,10 +15,54 @@ import static ca.mcgill.ecse211.lab5.Resources.*;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import lejos.hardware.Button;
 import lejos.hardware.Sound;
 import lejos.robotics.RegulatedMotor;
 
 public class Launcher{
+  public static void launchTest()
+  {
+    leftMotor.stop();
+    rightMotor.stop();
+    launchMotor1.setAcceleration(999999);
+    launchMotor2.setAcceleration(999999);
+    leftMotor.setAcceleration(2000);
+    rightMotor.setAcceleration(2000);
+    leftMotor.setSpeed(300);
+    rightMotor.setSpeed(300);
+  //  leftMotor.rotate(Navigation.convertAngle(360), true);
+   // rightMotor.rotate(-Navigation.convertAngle(360), false);
+    
+    
+    
+    Sound.beepSequenceUp();
+   // Navigation.turn(180);
+    launchMotor1.setSpeed(900);
+    launchMotor2.setSpeed(900);
+    
+    /*
+     * reset position
+     */
+    while(true)
+    {
+    moveLaunchers(120);
+    launchMotor1.stop();
+    launchMotor2.stop();
+    Lab5.sleepFor(500);
+   
+    
+    resetLauncher();
+    launchMotor1.flt();
+    launchMotor2.flt();
+    if(Button.waitForAnyPress(0) == Button.ID_ESCAPE)
+      break;
+    Sound.beepSequence();
+    Lab5.sleepFor(3000);
+    Sound.beepSequence();
+    }
+  //  } */
+    System.exit(0);
+  }
   public static void trackTest()
   {
     leftMotor.stop();
@@ -60,7 +104,7 @@ public class Launcher{
     launchMotor1.flt();
     launchMotor2.flt();
  
-    Lab5.sleepFor(2000);
+    Lab5.sleepFor(10000);
     Sound.beepSequence();
     moveLaunchers(115);
   //  } */
@@ -83,7 +127,7 @@ public class Launcher{
     int initialSpeed = launchMotor1.getSpeed();
     launchMotor1.setSpeed(RESET_SPEED);
     launchMotor2.setSpeed(RESET_SPEED);
-    moveLaunchers(-120);
+    moveLaunchers(-150);
     /**
      * set it back to the launch speed.
      */

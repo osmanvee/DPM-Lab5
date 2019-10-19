@@ -14,8 +14,8 @@ public class UltrasonicLocalizer {
     int firstEdge = 370; // initalize to impossible value for the conditions later on
     int secondEdge = 370;
     int prevData = 100;
-    leftMotor.setSpeed(150);
-    rightMotor.setSpeed(150);
+    leftMotor.setSpeed(130);
+    rightMotor.setSpeed(130);
     leftMotor.forward();
     rightMotor.backward();
     // stop when both are not 370
@@ -37,25 +37,18 @@ public class UltrasonicLocalizer {
     }
     leftMotor.backward();
     rightMotor.forward();
-    try {
-      Thread.sleep(300);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    Lab5.sleepFor(300);
     prevData = 100;
+    
     while (secondEdge == 370) {
       int theta = (int) Resources.odometer.getXYT()[2];
       int data = UltrasonicPoller.getDistance();
       /**
-       * Is below threshold and there was also a drop TODO implement noise margin
+       * Is below threshold and there was also a drop
        */
       if (data < Resources.EDGE_THRESHOLD && prevData > Resources.EDGE_THRESHOLD) {
         secondEdge = theta;
         Sound.beep();
-        /*
-         * switch directions
-         */
 
       }
       prevData = data;
@@ -68,11 +61,11 @@ public class UltrasonicLocalizer {
     System.out.println("\n\n\n\n");
     System.out.println(firstEdge + ",  " + secondEdge + " average: " + ave);
     double dtheta;
-    // detects left wall first
+    // detects back wall first. Since it rotates clockwise and detects falling edges.
     if (firstEdge < secondEdge)
-      dtheta = 220 - ave;
+      dtheta = 225 - ave;
     else
-      dtheta = 220 - 180 - ave;
+      dtheta = 225 - 180 - ave;
     Resources.odometer.incrementTheta(dtheta);
     // Navigation.turnTo(0);
     Sound.beepSequence();
@@ -80,8 +73,6 @@ public class UltrasonicLocalizer {
     // wait for reading to stabilize before measuring vertical distance.
 
     Navigation.turnTo(0);
-
-
   }
 
   public static void RisingEdge() {
@@ -112,25 +103,18 @@ public class UltrasonicLocalizer {
     }
     leftMotor.backward();
     rightMotor.forward();
-    try {
-      Thread.sleep(300);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    Lab5.sleepFor(300);
     prevData = 100;
+    
     while (secondEdge == 370) {
       int theta = (int) Resources.odometer.getXYT()[2];
       int data = UltrasonicPoller.getDistance();
       /**
-       * Is below threshold and there was also a drop TODO implement noise margin
+       * Is below threshold and there was also a drop
        */
       if (data > Resources.EDGE_THRESHOLD && prevData < Resources.EDGE_THRESHOLD) {
         secondEdge = theta;
         Sound.beep();
-        /*
-         * switch directions
-         */
 
       }
       prevData = data;

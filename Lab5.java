@@ -26,18 +26,13 @@ public class Lab5 {
     
  
     new Thread(odometer).start();
+    //Launcher.resetLauncher();
+   
    // buttonChoice = chooseType();// chooseType();
-    new Thread(new UltrasonicPoller()).start();
-    UltrasonicLocalizer.RisingEdge();
-    sleepFor(1000);
-    
-    Navigation.travelTo(40, 40);
-    sleepFor(1000);
+ //  localize();
+     Navigation.turnTo(0);
     Sound.buzz();
-    Navigation.turnTo(0);
-    Sound.buzz();
-    Launcher.resetLauncher();
-    Testing.trackTest();
+    Launcher.launchTest();
     LCD.clear();
  /*   
     if (buttonChoice == Button.ID_LEFT) {
@@ -45,6 +40,7 @@ public class Lab5 {
      new Thread(new UltrasonicPoller()).start();
       //Testing.lightSensorTest(); 
       UltrasonicLocalizer.RisingEdge();
+      //TODO kill or massively slow down the ultrasonic thread after localization
       Button.waitForAnyPress();
       new Thread(new lightPoller()).start();
       LightLocalizer.localizeDistance();
@@ -96,7 +92,27 @@ public class Lab5 {
         return buttonChoice;
     
   } 
-
+  /**
+   * initiates localization routines
+   */
+  private static void localize()
+  {
+    new Thread(new UltrasonicPoller()).start();
+    UltrasonicLocalizer.RisingEdge();
+    sleepFor(1000);
+    
+    
+    //increase sleep time so the thread doesnt consume as much time
+    UltrasonicPoller.setSleepTime(2000);
+    
+    
+    new Thread(new lightPoller()).start();
+    LightLocalizer.localizeDistance();
+    sleepFor(1000);
+    //TODO make angle light localization actually work
+  //  LightLocalizer.localizeAngle();
+    Sound.twoBeeps();
+  }
   /**
    * Sleeps current thread for the specified duration.
    * 

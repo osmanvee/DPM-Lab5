@@ -19,7 +19,7 @@ public class Resources {
   /**
    * Derivative threshold for detecting lines.
    */
-  public static final int DIFF_THRESHOLD = 75;
+  public static final int LIGHT_DIFF_THRESHOLD = 65;
   /**
    * distance to back up after detecting a line
    */
@@ -105,7 +105,7 @@ public class Resources {
   /**
    * The color sensor.
    */
-  // public static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+   public static final EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S3);
   /**
    * The ultrasonic sensor
    */

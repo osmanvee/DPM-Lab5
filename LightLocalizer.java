@@ -69,7 +69,7 @@ public class LightLocalizer {
        * so that it only looks for lines again after it goes back to 0, i.e doesn't detect same lines multiple times.
        */
       LCD.drawString("Diff: " + diff, 0, 5);
-      if (diff < -Resources.DIFF_THRESHOLD && steadyState == true) {
+      if (diff < -Resources.LIGHT_DIFF_THRESHOLD && steadyState == true) {
         
         Sound.beepSequence();
         steadyState = false;
@@ -127,7 +127,7 @@ public class LightLocalizer {
       * spike of less than -75 implies a line has been detected. steadyState makes it
       * so that it only looks for lines again after it goes back to 0, i.e doesn't detect same lines multiple times.
       */
-     if (diff < -Resources.DIFF_THRESHOLD && steadyState == true) {
+     if (diff < -Resources.LIGHT_DIFF_THRESHOLD && steadyState == true) {
        
        Sound.beepSequence();
        steadyState = false;      
@@ -142,7 +142,7 @@ public class LightLocalizer {
    //get average error
    sum /= count;
    odometer.incrementTheta(-sum);
-   sleepFor(1000);
+   sleepFor(2000);
    Navigation.turnTo(0);
  }
 }
