@@ -13,7 +13,7 @@ public class UltrasonicLocalizer {
     // record first edge angle, second edge angle, get average.
     int firstEdge = 370; // initalize to impossible value for the conditions later on
     int secondEdge = 370;
-    int prevData = 100;
+    int prevData = 0;
     leftMotor.setSpeed(130);
     rightMotor.setSpeed(130);
     leftMotor.forward();
@@ -38,7 +38,7 @@ public class UltrasonicLocalizer {
     leftMotor.backward();
     rightMotor.forward();
     Lab5.sleepFor(300);
-    prevData = 100;
+    prevData = 0;
     
     while (secondEdge == 370) {
       int theta = (int) Resources.odometer.getXYT()[2];

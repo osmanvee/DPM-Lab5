@@ -46,20 +46,20 @@ public class Navigation {
     rightMotor.rotate(convertDistance(magnitude), false); // executes next line first
     while (true) {
       if ((leftMotor.isMoving() && rightMotor.isMoving()) == false) // one motor isnt moving then stop
-          //|| UltrasonicPoller.getDistance() <= 9)
-        break; }
-    
+        // || UltrasonicPoller.getDistance() <= 9)
+        break;
+    }
+
     navigationStatus = false; // only sets it to false after travel function terminates
     // System.out.println("ended navigation!");
   }
 
   public static int TURN_AMOUNT = 125;
-  
+
   // public static void obstacleInterrupt()
   /**
    * dumb implementation. Rotates orthogonally to the block, travels worst case scenario to avoid 21 cm left, 21 cm
-   * right 21 cm forward
-   * Needs to be in seperate thread from the ultrasonic poller (ObstacleAvoider)
+   * right 21 cm forward Needs to be in seperate thread from the ultrasonic poller (ObstacleAvoider)
    */
   public static void obstacleAvoiderSimple(double x, double y, double theta) {
 
@@ -69,7 +69,7 @@ public class Navigation {
     int dir = crossProduct();
     turnTo(theta);
     try {
-      Thread.sleep(300); //time for readings to stabilize
+      Thread.sleep(300); // time for readings to stabilize
     } catch (InterruptedException e1) {
       e1.printStackTrace();
     }
@@ -84,11 +84,12 @@ public class Navigation {
       leftMotor.rotate(convertDistance(10), true);
       rightMotor.rotate(convertDistance(10), false);
       turn(TURN_AMOUNT * dir);
-      
-      /* wait for an amount of time for readings to stabilize
+
+      /*
+       * wait for an amount of time for readings to stabilize
        */
       try {
-        Thread.sleep(SLEEP_TIME); //time for readings to stabilize
+        Thread.sleep(SLEEP_TIME); // time for readings to stabilize
       } catch (InterruptedException e1) {
         e1.printStackTrace();
       }
@@ -98,20 +99,19 @@ public class Navigation {
       turn(-TURN_AMOUNT * dir);
     }
     Sound.beep();
-    turnTo(theta - 25 * dir); //original angle + extra amount so it doesn't crash into block
+    turnTo(theta - 25 * dir); // original angle + extra amount so it doesn't crash into block
     Lab5.sleepFor(SLEEP_TIME);
     while (true) {
       leftMotor.rotate(convertDistance(26), true);
       rightMotor.rotate(convertDistance(26), false);
       turn(TURN_AMOUNT * dir);
       try {
-        Thread.sleep(SLEEP_TIME); //time for readings to stabilize
-      } catch (InterruptedException e1)
-      {
+        Thread.sleep(SLEEP_TIME); // time for readings to stabilize
+      } catch (InterruptedException e1) {
         e1.printStackTrace();
       }
       dist = UltrasonicPoller.getDistance();
-      
+
       if (dist > BANDCENTRE)
         break;
       turn(-TURN_AMOUNT * dir);
@@ -138,7 +138,7 @@ public class Navigation {
   }
 
   /**
-   * turns by a set amount instead of to an absolute angle relative to the Y-axis
+   * turns by a set amount instead of to an absolute angle relative to the Y-axis TODO test it
    * 
    * @param theta relative angle to turn to
    */
@@ -172,6 +172,25 @@ public class Navigation {
     leftMotor.rotate(convertAngle(turn), true);
     rightMotor.rotate(-convertAngle(turn), false);
   }
+
+  /**
+   * Turns to face a point (X, Y)
+   * 
+   * @param x
+   * @param y
+   */
+  public static void turnToPoint(double x, double y) {
+    double[] currentPosition = odometer.getXYT();
+    // vector of the point from the robot
+    // Alternatively, the positon of the point with the robot as the origin
+    double vector[] = {currentPosition[0] - x, currentPosition[1] - y};
+    // turn to the angle of the vector
+    double angle = Math.atan2(vector[0], vector[1]);
+    if (angle < 0) // set it to between 0 and 360
+      angle += 360;
+    turnTo(angle);
+  }
+
 
   /**
    * 

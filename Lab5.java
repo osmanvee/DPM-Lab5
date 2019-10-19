@@ -26,38 +26,25 @@ public class Lab5 {
     
  
     new Thread(odometer).start();
-    //Launcher.resetLauncher();
-   
-   // buttonChoice = chooseType();// chooseType();
- //  localize();
-     Navigation.turnTo(0);
-    Sound.buzz();
-    Launcher.launchTest();
-    LCD.clear();
- /*   
-    if (buttonChoice == Button.ID_LEFT) {
-      
-     new Thread(new UltrasonicPoller()).start();
-      //Testing.lightSensorTest(); 
-      UltrasonicLocalizer.RisingEdge();
-      //TODO kill or massively slow down the ultrasonic thread after localization
-      Button.waitForAnyPress();
-      new Thread(new lightPoller()).start();
-      LightLocalizer.localizeDistance();
-     // LightLocalizer.localizeAngle();
-      System.exit(0);
-      
-      
-    } else {
-      new Thread(new UltrasonicPoller()).start();
-      //Testing.lightSensorTest(); 
-      UltrasonicLocalizer.FallingEdge();
-      Button.waitForAnyPress();
-      new Thread(new lightPoller()).start();
-      LightLocalizer.localizeDistance();
-      LightLocalizer.localizeAngle();
-      System.exit(0);
+    localize();
+    double Tx = 120 + 15, Ty = 240 + 15;
+    double dist = Math.hypot(Tx, Ty);
+    double bound = (120.0 + Math.max(40, TRACK));
+    if (Math.abs(dist - 120.0) < 0.0001) {
+        Navigation.turnTo(90 - Math.toDegrees(Math.atan(Ty / Tx)));
+    } else if (dist < bound) {
+        Navigation.travelTo(Tx, Ty + (bound));
+        Navigation.turnTo(180);
+    } else if (dist > bound) {
+        Navigation.travelTo(Tx, Ty - (bound));
+        Navigation.turnTo(0);
     }
+    System.exit(0);
+    System.out.println("max speed" + launchMotor1.getMaxSpeed());
+    Sound.beepSequenceUp();
+    Launcher.launchThenWait();
+    LCD.clear();
+ /*
     //  new Thread(new OdometryCorrectionTest()).start();
     */
     while (true) {
@@ -98,7 +85,7 @@ public class Lab5 {
   private static void localize()
   {
     new Thread(new UltrasonicPoller()).start();
-    UltrasonicLocalizer.RisingEdge();
+    UltrasonicLocalizer.FallingEdge();
     sleepFor(1000);
     
     
@@ -113,6 +100,8 @@ public class Lab5 {
   //  LightLocalizer.localizeAngle();
     Sound.twoBeeps();
   }
+  
+  
   /**
    * Sleeps current thread for the specified duration.
    * 
