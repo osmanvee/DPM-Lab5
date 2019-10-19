@@ -1,7 +1,7 @@
-package ca.mcgill.ecse211.lab4;
+package ca.mcgill.ecse211.lab5;
 
-import static ca.mcgill.ecse211.lab4.Resources.*;
-import ca.mcgill.ecse211.lab4.Resources;
+import static ca.mcgill.ecse211.lab5.Resources.*;
+import ca.mcgill.ecse211.lab5.Resources;
 import lejos.hardware.Sound;
 
 public class Navigation {
@@ -99,12 +99,7 @@ public class Navigation {
     }
     Sound.beep();
     turnTo(theta - 25 * dir); //original angle + extra amount so it doesn't crash into block
-    try {
-      Thread.sleep(SLEEP_TIME); //time for readings to stabilize
-    } catch (InterruptedException e1)
-    {
-      e1.printStackTrace();
-    }
+    Lab5.sleepFor(SLEEP_TIME);
     while (true) {
       leftMotor.rotate(convertDistance(26), true);
       rightMotor.rotate(convertDistance(26), false);

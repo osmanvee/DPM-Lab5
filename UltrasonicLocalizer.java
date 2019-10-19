@@ -1,8 +1,8 @@
-package ca.mcgill.ecse211.lab4;
+package ca.mcgill.ecse211.lab5;
 
-import static ca.mcgill.ecse211.lab4.Resources.leftMotor;
-import static ca.mcgill.ecse211.lab4.Resources.rightMotor;
-import ca.mcgill.ecse211.lab4.Resources;
+import static ca.mcgill.ecse211.lab5.Resources.leftMotor;
+import static ca.mcgill.ecse211.lab5.Resources.rightMotor;
+import ca.mcgill.ecse211.lab5.Resources;
 import lejos.hardware.Button;
 import lejos.hardware.Sound;
 

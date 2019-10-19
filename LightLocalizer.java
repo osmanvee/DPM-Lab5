@@ -1,11 +1,11 @@
-package ca.mcgill.ecse211.lab4;
+package ca.mcgill.ecse211.lab5;
 
-import static ca.mcgill.ecse211.lab4.Resources.leftMotor;
-import static ca.mcgill.ecse211.lab4.Resources.rightMotor;
+import static ca.mcgill.ecse211.lab5.Resources.colorSensor;
+import static ca.mcgill.ecse211.lab5.Resources.leftMotor;
+import static ca.mcgill.ecse211.lab5.Resources.odometer;
+import static ca.mcgill.ecse211.lab5.Resources.rightMotor;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
-import static ca.mcgill.ecse211.lab4.Resources.odometer;
-import static ca.mcgill.ecse211.lab4.Resources.colorSensor;
 
 public class LightLocalizer {
   public static int[] buffer = new int[5];

@@ -1,12 +1,13 @@
 /**
  * Osman Warsi and Khalid Bucheeri
  */
-package ca.mcgill.ecse211.lab4;
+package ca.mcgill.ecse211.lab5;
 
-import static ca.mcgill.ecse211.lab4.Resources.*;
+import static ca.mcgill.ecse211.lab5.Resources.*;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import lejos.hardware.Button;
+import lejos.hardware.Sound;
 
 /**
  * The main driver class for the odometry lab.
@@ -23,9 +24,19 @@ public class Lab5 {
    
     new Thread(new Display()).start();
     
-  
+ 
     new Thread(odometer).start();
    // buttonChoice = chooseType();// chooseType();
+    new Thread(new UltrasonicPoller()).start();
+    UltrasonicLocalizer.RisingEdge();
+    sleepFor(1000);
+    
+    Navigation.travelTo(40, 40);
+    sleepFor(1000);
+    Sound.buzz();
+    Navigation.turnTo(0);
+    Sound.buzz();
+    Launcher.resetLauncher();
     Testing.trackTest();
     LCD.clear();
  /*   

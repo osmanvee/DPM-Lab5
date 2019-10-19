@@ -1,6 +1,6 @@
-package ca.mcgill.ecse211.lab4;
+package ca.mcgill.ecse211.lab5;
 
-import static ca.mcgill.ecse211.lab4.Resources.*;
+import static ca.mcgill.ecse211.lab5.Resources.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -73,7 +73,7 @@ public class Odometer implements Runnable {
    * cannot be accessed externally.
    */
   private Odometer() {
-    setXYT(TILE_SIZE, TILE_SIZE, 0);
+    setXYT(15, 15, 0);
   }
 
   /**
