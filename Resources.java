@@ -71,7 +71,7 @@ public class Resources {
   /**
    * Offset between sensor and wheels. (magnitude)
    */
-  public static final double SENSOR_TO_WHEEL_DISTANCE = 1;
+  public static final double SENSOR_TO_WHEEL_DISTANCE = 3;
 
   /**
    * angle between light sensor position and wheelbase centre in degrees

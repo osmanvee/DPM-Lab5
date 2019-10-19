@@ -4,6 +4,7 @@ import static ca.mcgill.ecse211.lab5.Resources.colorSensor;
 import static ca.mcgill.ecse211.lab5.Resources.leftMotor;
 import static ca.mcgill.ecse211.lab5.Resources.odometer;
 import static ca.mcgill.ecse211.lab5.Resources.rightMotor;
+import static ca.mcgill.ecse211.lab5.Resources.*;
 import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 
@@ -39,23 +40,21 @@ public class LightLocalizer {
        * spike of less than -75 implies a line has been detected. steadyState makes it
        * so that it only looks for lines again after it goes back to 0, i.e doesn't detect same lines multiple times.
        */
-      if (diff < -75 && steadyState == true) {
+      if (diff < LIGHT_DIFF_THRESHOLD && steadyState == true) {
         
         Sound.beepSequence();
         steadyState = false;
         break;
-
       }
       sleepFor(100);
     }
     odometer.setY(-Resources.SENSOR_TO_WHEEL_DISTANCE);
     leftMotor.stop();
     rightMotor.stop();
+    leftMotor.rotate(Navigation.convertDistance(6));
+    rightMotor.rotate(Navigation.convertDistance(6));
     //back up
-//    leftMotor.rotate(-Navigation.convertDistance(Resources.BACKUP_DISTANCE), true);
-   // rightMotor.rotate(-Navigation.convertDistance(Resources.BACKUP_DISTANCE), false);
-  //  Sound.beepSequenceUp();
-    Navigation.turnTo(85);
+    Navigation.turnTo(90);
     
     leftMotor.forward();
     rightMotor.forward();
@@ -78,13 +77,14 @@ public class LightLocalizer {
       }
       sleepFor(40);
     }
-    odometer.setX(-Resources.SENSOR_TO_WHEEL_DISTANCE + 3);
+    odometer.setX(-Resources.SENSOR_TO_WHEEL_DISTANCE);
     leftMotor.stop();
     rightMotor.stop();
     
     Navigation.travelTo(0, 0);
-    sleepFor(800);
+    sleepFor(500);
     Navigation.turnTo(0);
+    Sound.twoBeeps();
   }
 
   /**
@@ -133,11 +133,9 @@ public class LightLocalizer {
        steadyState = false;      
        LCD.drawString("lines: " + count, 0, 6);
        sum += odometer.getXYT()[2] - (count%4) * 90 - Resources.SENSOR_TO_WHEEL_ANGLE;
-       //System.out.println("Line detected at: " + odometer.getXYT()[2]);
        count++; //increment lines detected
      }
      sleepFor(40);
-     //int error = theta - detectionAngle;
    }
    //get average error
    sum /= count;

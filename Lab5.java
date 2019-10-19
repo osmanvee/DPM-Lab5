@@ -26,7 +26,9 @@ public class Lab5 {
     
  
     new Thread(odometer).start();
+    Button.waitForAnyPress();
     localize();
+    /*
     double Tx = 120 + 15, Ty = 240 + 15;
     double dist = Math.hypot(Tx, Ty);
     double bound = (120.0 + Math.max(40, TRACK));
@@ -38,10 +40,12 @@ public class Lab5 {
     } else if (dist > bound) {
         Navigation.travelTo(Tx, Ty - (bound));
         Navigation.turnTo(0);
-    }
-    System.exit(0);
+    } */
     System.out.println("max speed" + launchMotor1.getMaxSpeed());
     Sound.beepSequenceUp();
+    Navigation.travelTo(30.48, 0);
+    Navigation.turnTo(0);
+    Button.waitForAnyPress();
     Launcher.launchThenWait();
     LCD.clear();
  /*
@@ -87,7 +91,8 @@ public class Lab5 {
     new Thread(new UltrasonicPoller()).start();
     UltrasonicLocalizer.FallingEdge();
     sleepFor(1000);
-    
+    Sound.buzz();
+    Button.waitForAnyPress();
     
     //increase sleep time so the thread doesnt consume as much time
     UltrasonicPoller.setSleepTime(2000);
