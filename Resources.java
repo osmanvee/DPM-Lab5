@@ -80,7 +80,7 @@ public class Resources {
   /**
    * Speed when moving launcher to initial position
    */
-  public static final int RESET_SPEED = 200;
+  public static final int RESET_SPEED = 250;
   /**
    * The tile size in centimeters.
    */

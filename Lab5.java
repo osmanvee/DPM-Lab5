@@ -23,15 +23,10 @@ public class Lab5 {
     int buttonChoice;
    
     new Thread(new Display()).start();
-    new Thread(new lightPoller()).start();
-  /*  sleepFor(300);
-    localize();
-    Button.waitForAnyPress();
-    Navigation.travelTo(30.48, 0);
-    Launcher.launchThenWait();
-    */
-    Launcher.launchThenWait();
     new Thread(odometer).start();
+    localize();
+    Navigation.travelTo(30.48, 30.48);
+    Launcher.launchThenWaitTest();
     Button.waitForAnyPress();
  //   localize();   
     double Tx = 30 + 15, Ty = 6 * 30 + 15;
@@ -95,6 +90,7 @@ public class Lab5 {
    */
   private static void localize()
   {
+    System.out.println("max speed: " + launchMotor1.getMaxSpeed());
     new Thread(new UltrasonicPoller()).start();
     sleepFor(1000);
     UltrasonicLocalizer.RisingEdge();
@@ -102,6 +98,7 @@ public class Lab5 {
     Sound.buzz();
     UltrasonicPoller.setSleepTime(2000);
     new Thread(new lightPoller()).start();
+    Navigation.turnTo(0);
     Button.waitForAnyPress();
     
     //increase sleep time so the thread doesnt consume as much time
@@ -113,7 +110,7 @@ public class Lab5 {
     sleepFor(1000);
     //TODO make angle light localization actually work
   //  LightLocalizer.localizeAngle();
-    Sound.twoBeeps();
+    LightLocalizer.localizeAngle();
   }
   
   

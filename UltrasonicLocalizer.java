@@ -128,11 +128,10 @@ public class UltrasonicLocalizer {
     double dtheta;
     // detects left wall first
     if (firstEdge > secondEdge)
-      dtheta = 220 - ave;
+      dtheta = 210 - ave;
     else
-      dtheta = 220 - 180 - ave;
+      dtheta = 210 - 180 - ave;
     Resources.odometer.incrementTheta(dtheta);
-    // Navigation.turnTo(0);
     Sound.beepSequence();
 
     // wait for reading to stabilize before measuring vertical distance.

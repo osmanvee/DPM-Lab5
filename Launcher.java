@@ -20,6 +20,9 @@ import lejos.hardware.Sound;
 import lejos.robotics.RegulatedMotor;
 
 public class Launcher {
+  /**
+   * Launches then waits for a button press to launch again
+   */
   public static void launchThenWait() {
     launchMotor1.setAcceleration(999999);
     launchMotor2.setAcceleration(999999);
@@ -67,6 +70,7 @@ public class Launcher {
     int initialSpeed = launchMotor1.getSpeed();
     launchMotor1.setSpeed(RESET_SPEED);
     launchMotor2.setSpeed(RESET_SPEED);
+    Lab5.sleepFor(200);
     moveLaunchers(-150);
     /**
      * set it back to the launch speed.
@@ -74,4 +78,50 @@ public class Launcher {
     launchMotor1.setSpeed(initialSpeed);
     launchMotor2.setSpeed(initialSpeed);
   }
+  /**
+   * Press up and down to change launcher speed
+   */
+  public static void launchThenWaitTest() {
+    int speed = 800;
+    launchMotor1.setAcceleration(999999);
+    launchMotor2.setAcceleration(999999);
+    launchMotor1.setSpeed(speed);
+    launchMotor2.setSpeed(speed);
+    leftMotor.stop();
+    rightMotor.stop();
+    resetLauncher();
+    /**
+     * Launches then waits for button press.
+     * Press back to exit.
+     */
+    while (true) {
+      Sound.beepSequence();
+      moveLaunchers(100);
+      launchMotor1.stop();
+      launchMotor2.stop();
+      Lab5.sleepFor(500);
+      resetLauncher();
+      Sound.buzz();
+      launchMotor1.flt();
+      launchMotor2.flt();
+      int choice = Button.waitForAnyPress(0);
+      if (choice == Button.ID_ESCAPE)
+        {
+          break;
+        }
+      else if(choice == Button.ID_DOWN)
+        speed -= 100;
+      else if(choice == Button.ID_LEFT)
+        speed -= 25;
+      else if(choice == Button.ID_RIGHT)
+        speed += 25;
+      else if(choice == Button.ID_UP)
+        speed += 100;
+      System.out.println("speed: " + speed);
+      Sound.beepSequence();
+      Lab5.sleepFor(1000);
+    }
+    System.exit(0);
+  }
+
 }

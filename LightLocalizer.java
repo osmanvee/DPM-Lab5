@@ -23,6 +23,7 @@ public class LightLocalizer {
      */
     leftMotor.setSpeed(100);
     rightMotor.setSpeed(100);
+    Navigation.turnTo(0);
     leftMotor.forward();
     rightMotor.forward();
     // if light sensing returns to 0 to prevent multiple line readings.
@@ -126,26 +127,31 @@ public class LightLocalizer {
      if (diff > 0) // negative value, so has returned to steady state (fluctuations around 0,0)
        steadyState = true;
      /*
-      * spike of less than -75 implies a line has been detected. steadyState makes it
+      * spike of less than -55 implies a line has been detected. steadyState makes it
       * so that it only looks for lines again after it goes back to 0, i.e doesn't detect same lines multiple times.
       */
-     if (diff < -Resources.LIGHT_DIFF_THRESHOLD && steadyState == true) {
+     //assume angle isnt bad
+     if ((diff < Resources.LIGHT_DIFF_THRESHOLD) && (steadyState == true)
+         && (odometer.getXYT()[2] > 50) && (odometer.getXYT()[2] < 300)) {
        
        Sound.playTone(count * 2000, 300);
        steadyState = false;      
        System.out.println("lines: " + count + "at " + odometer.getXYT()[2]);
+       int nearestLine = (int) (Math.round(odometer.getXYT()[2] / 90) * 90);
+       int error = (int) (odometer.getXYT()[2] - nearestLine);
        sum += odometer.getXYT()[2] - Resources.SENSOR_TO_WHEEL_ANGLE;
        count++; //increment lines detected
      }
      sleepFor(40);
    }
-   leftMotor.stop();
    rightMotor.stop();
-   sum -= (0 + 90 + 180 + 270);
+   leftMotor.stop();
+   
+  // sum -= (90 + 180 + 270);
    //get average error
+   if(count != 0 )
    sum /= count;
    odometer.incrementTheta(-sum);
-   sleepFor(2000);
    Navigation.turnTo(0);
  }
 }
