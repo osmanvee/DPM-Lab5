@@ -21,7 +21,7 @@ public class Navigation {
    */
   public static void travelTo(double x, double y) {
     navigationStatus = true;
-    LCD.drawString("to(" + x + "," + y + ")", 0, 5);
+   
     double[] position = Resources.odometer.getXYT();
     /**
      * vector to move from current position to the next
@@ -44,12 +44,12 @@ public class Navigation {
     rightMotor.setSpeed(FORWARD_SPEED);
     leftMotor.rotate(convertDistance(magnitude), true);
     rightMotor.rotate(convertDistance(magnitude), false); // executes next line first
-    while (true) {
+  /*  while (true) {
       if ((leftMotor.isMoving() && rightMotor.isMoving()) == false) // one motor isnt moving then stop
         // || UltrasonicPoller.getDistance() <= 9)
         break;
     }
-
+*/
     navigationStatus = false; // only sets it to false after travel function terminates
     // System.out.println("ended navigation!");
   }

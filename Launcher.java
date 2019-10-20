@@ -34,7 +34,7 @@ public class Launcher {
      */
     while (true) {
       Sound.beepSequence();
-      moveLaunchers(115);
+      moveLaunchers(100);
       launchMotor1.stop();
       launchMotor2.stop();
       Lab5.sleepFor(500);

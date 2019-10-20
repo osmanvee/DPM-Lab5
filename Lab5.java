@@ -30,25 +30,28 @@ public class Lab5 {
     Navigation.travelTo(30.48, 0);
     Launcher.launchThenWait();
     */
+    Launcher.launchThenWait();
     new Thread(odometer).start();
     Button.waitForAnyPress();
- //   localize();
-    
-    double Tx = 4 * 30 + 15, Ty = 6 * 30 + 15;
+ //   localize();   
+    double Tx = 30 + 15, Ty = 6 * 30 + 15;
+    double Typ = (Ty - (Ty % 30));
     double dist = Math.hypot(Tx, Ty);
-    double bound = (120.0 + Math.max(40, TRACK));
+    double bound = (120.0 + Math.max(20, TRACK));
     if (Math.abs(dist - 120.0) < 0.0001) {
         Navigation.turnTo(90 - Math.toDegrees(Math.atan(Ty / Tx)));
     } else if (dist < bound) {
-        Navigation.travelTo(Tx, Ty + (bound));
+        Navigation.travelTo(Tx, Typ + 30 + 120);
         Navigation.turnTo(180);
     } else if (dist > bound) {
-        Navigation.travelTo(Tx, Ty - (bound));
+        Navigation.travelTo(Tx, Typ - 120);
+        Sound.twoBeeps();
+        sleepFor(1000);
         Navigation.turnTo(0);
     } 
     System.out.println("max speed" + launchMotor1.getMaxSpeed());
     Sound.beepSequenceUp();
-    Launcher.launchThenWait();
+   
     Button.waitForAnyPress();
     
     LCD.clear();
