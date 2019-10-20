@@ -22,8 +22,9 @@ public class lightPoller implements Runnable {
     float[] lightData = new float[3];
     colorSensor.getRGBMode().fetchSample(lightData, 0);
     /**
-     * Resizing the actual intensity values to make it more readable and thus easier to test. Also easier to deal with
-     * ints than double precision
+     * Resizing the actual intensity values to make it more readable 
+     * and thus easier to test.
+     *  Also easier to deal with ints than double precision
      */
 
     for (int i = 0; i < 3; i++) {
@@ -51,8 +52,6 @@ public class lightPoller implements Runnable {
      */
 
     initalize(buffer);
-    // if light sensing returns to 0 to prevent multiple line readings.
-    boolean steadyState = true;
     while (true) {
       intensity = calculateIntensity();
       diff = intensity - prevIntensity;

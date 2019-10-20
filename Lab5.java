@@ -23,13 +23,18 @@ public class Lab5 {
     int buttonChoice;
    
     new Thread(new Display()).start();
-    
- 
+    new Thread(new lightPoller()).start();
+  /*  sleepFor(300);
+    localize();
+    Button.waitForAnyPress();
+    Navigation.travelTo(30.48, 0);
+    Launcher.launchThenWait();
+    */
     new Thread(odometer).start();
     Button.waitForAnyPress();
-    localize();
-    /*
-    double Tx = 120 + 15, Ty = 240 + 15;
+ //   localize();
+    
+    double Tx = 4 * 30 + 15, Ty = 6 * 30 + 15;
     double dist = Math.hypot(Tx, Ty);
     double bound = (120.0 + Math.max(40, TRACK));
     if (Math.abs(dist - 120.0) < 0.0001) {
@@ -40,13 +45,12 @@ public class Lab5 {
     } else if (dist > bound) {
         Navigation.travelTo(Tx, Ty - (bound));
         Navigation.turnTo(0);
-    } */
+    } 
     System.out.println("max speed" + launchMotor1.getMaxSpeed());
     Sound.beepSequenceUp();
-    Navigation.travelTo(30.48, 0);
-    Navigation.turnTo(0);
-    Button.waitForAnyPress();
     Launcher.launchThenWait();
+    Button.waitForAnyPress();
+    
     LCD.clear();
  /*
     //  new Thread(new OdometryCorrectionTest()).start();
@@ -89,13 +93,16 @@ public class Lab5 {
   private static void localize()
   {
     new Thread(new UltrasonicPoller()).start();
-    UltrasonicLocalizer.FallingEdge();
+    sleepFor(1000);
+    UltrasonicLocalizer.RisingEdge();
     sleepFor(1000);
     Sound.buzz();
+    UltrasonicPoller.setSleepTime(2000);
+    new Thread(new lightPoller()).start();
     Button.waitForAnyPress();
     
     //increase sleep time so the thread doesnt consume as much time
-    UltrasonicPoller.setSleepTime(2000);
+
     
     
     new Thread(new lightPoller()).start();

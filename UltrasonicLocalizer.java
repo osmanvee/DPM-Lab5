@@ -37,9 +37,8 @@ public class UltrasonicLocalizer {
     }
     leftMotor.backward();
     rightMotor.forward();
-    Lab5.sleepFor(300);
+    Lab5.sleepFor(500);
     prevData = 0;
-    
     while (secondEdge == 370) {
       int theta = (int) Resources.odometer.getXYT()[2];
       int data = UltrasonicPoller.getDistance();
@@ -62,10 +61,10 @@ public class UltrasonicLocalizer {
     System.out.println(firstEdge + ",  " + secondEdge + " average: " + ave);
     double dtheta;
     // detects back wall first. Since it rotates clockwise and detects falling edges.
-    if (firstEdge < secondEdge)
-      dtheta = 225 - ave;
+    if (firstEdge > secondEdge)
+      dtheta = 230 - ave;
     else
-      dtheta = 225 - 180 - ave;
+      dtheta = 230 - 180 - ave;
     Resources.odometer.incrementTheta(dtheta);
     // Navigation.turnTo(0);
     Sound.beepSequence();

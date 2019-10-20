@@ -19,7 +19,7 @@ public class Resources {
   /**
    * Derivative threshold for detecting lines.
    */
-  public static final int LIGHT_DIFF_THRESHOLD = 65;
+  public static final int LIGHT_DIFF_THRESHOLD = -55;
   /**
    * distance to back up after detecting a line
    */

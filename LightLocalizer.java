@@ -51,8 +51,8 @@ public class LightLocalizer {
     odometer.setY(-Resources.SENSOR_TO_WHEEL_DISTANCE);
     leftMotor.stop();
     rightMotor.stop();
-    leftMotor.rotate(Navigation.convertDistance(6));
-    rightMotor.rotate(Navigation.convertDistance(6));
+    leftMotor.rotate(Navigation.convertDistance(6), true);
+    rightMotor.rotate(Navigation.convertDistance(6), false);
     //back up
     Navigation.turnTo(90);
     
@@ -68,7 +68,7 @@ public class LightLocalizer {
        * so that it only looks for lines again after it goes back to 0, i.e doesn't detect same lines multiple times.
        */
       LCD.drawString("Diff: " + diff, 0, 5);
-      if (diff < -Resources.LIGHT_DIFF_THRESHOLD && steadyState == true) {
+      if (diff < Resources.LIGHT_DIFF_THRESHOLD && steadyState == true) {
         
         Sound.beepSequence();
         steadyState = false;
@@ -105,6 +105,8 @@ public class LightLocalizer {
   */
  public static void localizeAngle()
  {
+   leftMotor.stop();
+   rightMotor.stop();
    leftMotor.setSpeed(150);
    rightMotor.setSpeed(150);
    //Resources.SENSOR_TO_WHEEL_ANGLE;
@@ -129,14 +131,17 @@ public class LightLocalizer {
       */
      if (diff < -Resources.LIGHT_DIFF_THRESHOLD && steadyState == true) {
        
-       Sound.beepSequence();
+       Sound.playTone(count * 2000, 300);
        steadyState = false;      
-       LCD.drawString("lines: " + count, 0, 6);
-       sum += odometer.getXYT()[2] - (count%4) * 90 - Resources.SENSOR_TO_WHEEL_ANGLE;
+       System.out.println("lines: " + count + "at " + odometer.getXYT()[2]);
+       sum += odometer.getXYT()[2] - Resources.SENSOR_TO_WHEEL_ANGLE;
        count++; //increment lines detected
      }
      sleepFor(40);
    }
+   leftMotor.stop();
+   rightMotor.stop();
+   sum -= (0 + 90 + 180 + 270);
    //get average error
    sum /= count;
    odometer.incrementTheta(-sum);

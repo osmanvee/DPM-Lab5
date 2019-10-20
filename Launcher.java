@@ -25,6 +25,8 @@ public class Launcher {
     launchMotor2.setAcceleration(999999);
     launchMotor1.setSpeed(800);
     launchMotor2.setSpeed(800);
+    leftMotor.stop();
+    rightMotor.stop();
     resetLauncher();
     /**
      * Launches then waits for button press.
