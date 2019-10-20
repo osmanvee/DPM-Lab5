@@ -26,6 +26,7 @@ public class Lab5 {
     new Thread(odometer).start();
     localize();
     Navigation.travelTo(30.48, 30.48);
+    Navigation.turnToPoint(0, 0);
     Launcher.launchThenWaitTest();
     Button.waitForAnyPress();
  //   localize();   
@@ -44,6 +45,8 @@ public class Lab5 {
         sleepFor(1000);
         Navigation.turnTo(0);
     } 
+    
+    
     System.out.println("max speed" + launchMotor1.getMaxSpeed());
     Sound.beepSequenceUp();
    
@@ -98,7 +101,6 @@ public class Lab5 {
     Sound.buzz();
     UltrasonicPoller.setSleepTime(2000);
     new Thread(new lightPoller()).start();
-    Navigation.turnTo(0);
     Button.waitForAnyPress();
     
     //increase sleep time so the thread doesnt consume as much time

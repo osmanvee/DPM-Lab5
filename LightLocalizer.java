@@ -55,6 +55,7 @@ public class LightLocalizer {
     leftMotor.rotate(Navigation.convertDistance(6), true);
     rightMotor.rotate(Navigation.convertDistance(6), false);
     //back up
+    sleepFor(500);
     Navigation.turnTo(90);
     
     leftMotor.forward();
@@ -106,6 +107,8 @@ public class LightLocalizer {
   */
  public static void localizeAngle()
  {
+   Navigation.travelTo(0, 0);
+   Navigation.turnTo(0);
    leftMotor.stop();
    rightMotor.stop();
    leftMotor.setSpeed(150);
@@ -136,22 +139,25 @@ public class LightLocalizer {
        
        Sound.playTone(count * 2000, 300);
        steadyState = false;      
-       System.out.println("lines: " + count + "at " + odometer.getXYT()[2]);
+      
        int nearestLine = (int) (Math.round(odometer.getXYT()[2] / 90) * 90);
-       int error = (int) (odometer.getXYT()[2] - nearestLine);
-       sum += odometer.getXYT()[2] - Resources.SENSOR_TO_WHEEL_ANGLE;
+       int error = (int) (nearestLine - odometer.getXYT()[2]);
+       System.out.println("lines: " + count + "at " + odometer.getXYT()[2]);
+       System.out.println("error: " + error);
+       sum += error;
        count++; //increment lines detected
      }
      sleepFor(40);
    }
    rightMotor.stop();
    leftMotor.stop();
-   
+   sleepFor(500);
   // sum -= (90 + 180 + 270);
    //get average error
    if(count != 0 )
    sum /= count;
    odometer.incrementTheta(-sum);
+
    Navigation.turnTo(0);
  }
 }
