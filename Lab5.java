@@ -23,6 +23,7 @@ public class Lab5 {
     new Thread(new Display()).start();
     double Tx = 30 + 15, Ty = 6 * 30 + 15;
     new Thread(odometer).start();
+    Button.waitForAnyPress();
     localize();
     travelToLaunchPoint(Tx, Ty);
     //didn't test turnToPoint
@@ -81,7 +82,7 @@ public class Lab5 {
     new Thread(new UltrasonicPoller()).start();
     sleepFor(1000);
     UltrasonicLocalizer.RisingEdge();
-    sleepFor(1000);
+    sleepFor(500);
     Sound.buzz();
     UltrasonicPoller.setSleepTime(2000);
     new Thread(new lightPoller()).start();
@@ -113,7 +114,7 @@ public class Lab5 {
         Navigation.travelTo(Tx, Typ + 30 + 120);
         Navigation.turnTo(180);
     } else if (dist > bound) {
-        Navigation.travelTo(Tx, Ty -15 -120);
+        Navigation.travelTo(Tx, Ty - 7 - 120);
         Sound.twoBeeps();
         sleepFor(1000);
         Navigation.turnTo(0);
