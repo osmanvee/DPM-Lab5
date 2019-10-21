@@ -128,9 +128,9 @@ public class UltrasonicLocalizer {
     double dtheta;
     // detects left wall first
     if (firstEdge > secondEdge)
-      dtheta = 210 - ave;
+      dtheta = 220 - ave;
     else
-      dtheta = 210 - 180 - ave;
+      dtheta = 215 - 180 - ave;
     Resources.odometer.incrementTheta(dtheta);
     Sound.beepSequence();
 
