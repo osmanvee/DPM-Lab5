@@ -25,7 +25,8 @@ public class Lab5 {
     new Thread(odometer).start();
     localize();
     travelToLaunchPoint(Tx, Ty);
-    // Navigation.turnToPoint(0, 0);
+    //didn't test turnToPoint
+    Navigation.turnToPoint(Tx, Ty);
     Launcher.launchThenWaitTest();
     Button.waitForAnyPress();
     
@@ -93,10 +94,13 @@ public class Lab5 {
     new Thread(new lightPoller()).start();
     LightLocalizer.localizeDistance();
     sleepFor(1000);
-    //TODO make angle light localization actually work
-  //  LightLocalizer.localizeAngle();
     LightLocalizer.localizeAngle();
   }
+  /**
+   * Travels to face launch point T
+   * @param Tx - centre of the square x coordinate
+   * @param Ty - centre of the square y coordinate
+   */
   public static void travelToLaunchPoint(double Tx, double Ty)
   {
     
