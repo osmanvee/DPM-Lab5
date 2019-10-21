@@ -20,31 +20,14 @@ public class Lab5 {
    * @param args
    */
   public static void main(String[] args) {
-    int buttonChoice;
-   
     new Thread(new Display()).start();
+    double Tx = 30 + 15, Ty = 6 * 30 + 15;
     new Thread(odometer).start();
     localize();
-    Navigation.travelTo(30.48, 30.48);
-    Navigation.turnToPoint(0, 0);
+    travelToLaunchPoint(Tx, Ty);
+    // Navigation.turnToPoint(0, 0);
     Launcher.launchThenWaitTest();
     Button.waitForAnyPress();
- //   localize();   
-    double Tx = 30 + 15, Ty = 6 * 30 + 15;
-    double Typ = (Ty - (Ty % 30));
-    double dist = Math.hypot(Tx, Ty);
-    double bound = (120.0 + Math.max(20, TRACK));
-    if (Math.abs(dist - 120.0) < 0.0001) {
-        Navigation.turnTo(90 - Math.toDegrees(Math.atan(Ty / Tx)));
-    } else if (dist < bound) {
-        Navigation.travelTo(Tx, Typ + 30 + 120);
-        Navigation.turnTo(180);
-    } else if (dist > bound) {
-        Navigation.travelTo(Tx, Typ - 120);
-        Sound.twoBeeps();
-        sleepFor(1000);
-        Navigation.turnTo(0);
-    } 
     
     
     System.out.println("max speed" + launchMotor1.getMaxSpeed());
@@ -114,7 +97,24 @@ public class Lab5 {
   //  LightLocalizer.localizeAngle();
     LightLocalizer.localizeAngle();
   }
-  
+  public static void travelToLaunchPoint(double Tx, double Ty)
+  {
+    
+    double Typ = (Ty - (Ty % 30));
+    double dist = Math.hypot(Tx, Ty);
+    double bound = (120.0 + Math.max(20, TRACK));
+    if (Math.abs(dist - 120.0) < 0.0001) {
+        Navigation.turnTo(90 - Math.toDegrees(Math.atan(Ty / Tx)));
+    } else if (dist < bound) {
+        Navigation.travelTo(Tx, Typ + 30 + 120);
+        Navigation.turnTo(180);
+    } else if (dist > bound) {
+        Navigation.travelTo(Tx, Ty -15 -120);
+        Sound.twoBeeps();
+        sleepFor(1000);
+        Navigation.turnTo(0);
+    } 
+  }
   
   /**
    * Sleeps current thread for the specified duration.
