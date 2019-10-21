@@ -95,6 +95,8 @@ public class Launcher {
      * Press back to exit.
      */
     while (true) {
+      launchMotor1.setSpeed(speed);
+      launchMotor2.setSpeed(speed);
       Sound.beepSequence();
       moveLaunchers(100);
       launchMotor1.stop();
@@ -109,7 +111,7 @@ public class Launcher {
         {
           break;
         }
-      else if(choice == Button.ID_DOWN)
+/*      else if(choice == Button.ID_DOWN)
         speed -= 100;
       else if(choice == Button.ID_LEFT)
         speed -= 25;
@@ -117,6 +119,7 @@ public class Launcher {
         speed += 25;
       else if(choice == Button.ID_UP)
         speed += 100;
+        */
       System.out.println("speed: " + speed);
       Sound.beepSequence();
       Lab5.sleepFor(1000);
